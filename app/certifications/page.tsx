@@ -9,6 +9,7 @@ const certifications = [
     issuer: "Coursera / Google",
     category: "Programming",
     description: "Certification en programmation Python couvrant les fondamentaux, les structures de données et les algorithmes.",
+    link: "https://www.coursera.org/",
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ const certifications = [
     issuer: "Coursera / Duke University",
     category: "Programming",
     description: "Certification en langage C avec focus sur la programmation système et la gestion de mémoire.",
+    link: "https://www.coursera.org/",
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ const certifications = [
     issuer: "Microsoft",
     category: "Programming",
     description: "Certification en développement C# et .NET pour applications desktop et web.",
+    link: "https://learn.microsoft.com/",
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ const certifications = [
     issuer: "Google",
     category: "Mobile",
     description: "Certification en développement d'applications mobiles cross-platform avec Flutter.",
+    link: "https://flutter.dev/",
   },
   {
     id: 5,
@@ -41,6 +45,7 @@ const certifications = [
     issuer: "freeCodeCamp",
     category: "Web",
     description: "Certification complète en développement web (HTML, CSS, JavaScript, React).",
+    link: "https://www.freecodecamp.org/",
   },
   {
     id: 6,
@@ -49,6 +54,7 @@ const certifications = [
     issuer: "Cisco",
     category: "Security",
     description: "Certification en cybersécurité couvrant les principes de sécurité réseau et les bonnes pratiques.",
+    link: "https://www.cisco.com/",
   },
 ];
 
@@ -80,6 +86,16 @@ export default function Certifications() {
                   <span className="bg-cyan-400/15 border border-cyan-400/30 px-3 py-1 rounded-full text-sm text-white inline-block">
                     {cert.category}
                   </span>
+                  {cert.link && (
+                    <a
+                      href={cert.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-[0_0_10px_rgba(124,58,237,0.3)] hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] transition-all inline-block"
+                    >
+                      Voir la certification
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

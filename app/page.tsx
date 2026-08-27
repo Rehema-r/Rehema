@@ -73,6 +73,32 @@ export default function Home() {
       <section className="py-20 bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-4 text-white drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+            Statistiques
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
+            <div className="text-center">
+              <div className="text-5xl font-bold text-cyan-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)] mb-2">14+</div>
+              <div className="text-slate-400">Projets</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold text-cyan-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)] mb-2">40+</div>
+              <div className="text-slate-400">Compétences</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold text-cyan-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)] mb-2">6+</div>
+              <div className="text-slate-400">Certifications</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold text-cyan-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)] mb-2">2+</div>
+              <div className="text-slate-400">Entreprises</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-4 text-white drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]">
             Projets Phares
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">

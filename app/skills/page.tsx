@@ -1,5 +1,8 @@
+'use client';
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useState } from 'react';
 
 const skills = {
   web: [
@@ -62,6 +65,8 @@ const skills = {
 };
 
 export default function Skills() {
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
@@ -85,11 +90,18 @@ export default function Skills() {
             </p>
             <div className="space-y-6">
               {skills.web.map((skill) => (
-                <div key={skill.name}>
+                <div 
+                  key={skill.name}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  className="transition-all duration-300 hover:scale-[1.02]"
+                >
                   <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
                   <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
                     <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className={`h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-out ${
+                        hoveredSkill === skill.name ? 'shadow-[0_0_20px_rgba(34,211,238,0.8)]' : ''
+                      }`}
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>
@@ -109,11 +121,18 @@ export default function Skills() {
             </p>
             <div className="space-y-6">
               {skills.mobile.map((skill) => (
-                <div key={skill.name}>
+                <div 
+                  key={skill.name}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  className="transition-all duration-300 hover:scale-[1.02]"
+                >
                   <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
                   <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
                     <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className={`h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-out ${
+                        hoveredSkill === skill.name ? 'shadow-[0_0_20px_rgba(34,211,238,0.8)]' : ''
+                      }`}
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>
@@ -133,11 +152,18 @@ export default function Skills() {
             </p>
             <div className="space-y-6">
               {skills.backend.map((skill) => (
-                <div key={skill.name}>
+                <div 
+                  key={skill.name}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  className="transition-all duration-300 hover:scale-[1.02]"
+                >
                   <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
                   <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
                     <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className={`h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-out ${
+                        hoveredSkill === skill.name ? 'shadow-[0_0_20px_rgba(34,211,238,0.8)]' : ''
+                      }`}
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>
@@ -157,11 +183,18 @@ export default function Skills() {
             </p>
             <div className="space-y-6">
               {skills.database.map((skill) => (
-                <div key={skill.name}>
+                <div 
+                  key={skill.name}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  className="transition-all duration-300 hover:scale-[1.02]"
+                >
                   <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
                   <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
                     <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className={`h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-out ${
+                        hoveredSkill === skill.name ? 'shadow-[0_0_20px_rgba(34,211,238,0.8)]' : ''
+                      }`}
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>
@@ -181,11 +214,18 @@ export default function Skills() {
             </p>
             <div className="space-y-6">
               {skills.devops.map((skill) => (
-                <div key={skill.name}>
+                <div 
+                  key={skill.name}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  className="transition-all duration-300 hover:scale-[1.02]"
+                >
                   <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
                   <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
                     <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className={`h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-out ${
+                        hoveredSkill === skill.name ? 'shadow-[0_0_20px_rgba(34,211,238,0.8)]' : ''
+                      }`}
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>
@@ -205,11 +245,18 @@ export default function Skills() {
             </p>
             <div className="space-y-6">
               {skills.ai.map((skill) => (
-                <div key={skill.name}>
+                <div 
+                  key={skill.name}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  className="transition-all duration-300 hover:scale-[1.02]"
+                >
                   <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
                   <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
                     <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className={`h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-out ${
+                        hoveredSkill === skill.name ? 'shadow-[0_0_20px_rgba(34,211,238,0.8)]' : ''
+                      }`}
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>
@@ -229,11 +276,18 @@ export default function Skills() {
             </p>
             <div className="space-y-6">
               {skills.architecture.map((skill) => (
-                <div key={skill.name}>
+                <div 
+                  key={skill.name}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  className="transition-all duration-300 hover:scale-[1.02]"
+                >
                   <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
                   <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
                     <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className={`h-full bg-gradient-to-r from-cyan-500 via-purple-600 to-cyan-500 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-out ${
+                        hoveredSkill === skill.name ? 'shadow-[0_0_20px_rgba(34,211,238,0.8)]' : ''
+                      }`}
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>

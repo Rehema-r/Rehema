@@ -1,7 +1,80 @@
+'use client';
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useState } from 'react';
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const validateForm = () => {
+    let newErrors = {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    };
+    let isValid = true;
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Le nom est requis';
+      isValid = false;
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'L\'email est requis';
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'L\'email n\'est pas valide';
+      isValid = false;
+    }
+
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'Le sujet est requis';
+      isValid = false;
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Le message est requis';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setSubmitted(true);
+      // Here you would typically send the form data to your backend
+      console.log('Form submitted:', formData);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+    // Clear error when user starts typing
+    setErrors({
+      ...errors,
+      [e.target.name]: ''
+    });
+  };
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
@@ -68,7 +141,12 @@ export default function Contact() {
                 Envoyer un message
               </h2>
               
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                {submitted && (
+                  <div className="bg-green-500/20 border border-green-500 text-green-400 px-4 py-3 rounded-lg">
+                    Message envoyé avec succès ! Je vous répondrai bientôt.
+                  </div>
+                )}
                 <div>
                   <label htmlFor="name" className="block mb-2 font-semibold text-white">
                     Nom
@@ -77,9 +155,14 @@ export default function Contact() {
                     type="text"
                     id="name"
                     name="name"
-                    className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 rounded-lg border bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all ${
+                      errors.name ? 'border-red-500' : 'border-slate-700'
+                    }`}
                     placeholder="Votre nom"
                   />
+                  {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
                 </div>
                 
                 <div>
@@ -90,9 +173,14 @@ export default function Contact() {
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 rounded-lg border bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all ${
+                      errors.email ? 'border-red-500' : 'border-slate-700'
+                    }`}
                     placeholder="votre@email.com"
                   />
+                  {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
                 </div>
                 
                 <div>
@@ -103,9 +191,14 @@ export default function Contact() {
                     type="text"
                     id="subject"
                     name="subject"
-                    className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 rounded-lg border bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all ${
+                      errors.subject ? 'border-red-500' : 'border-slate-700'
+                    }`}
                     placeholder="Sujet de votre message"
                   />
+                  {errors.subject && <p className="text-red-400 text-sm mt-1">{errors.subject}</p>}
                 </div>
                 
                 <div>
@@ -115,10 +208,15 @@ export default function Contact() {
                   <textarea
                     id="message"
                     name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all resize-none"
+                    className={`w-full px-4 py-3 rounded-lg border bg-slate-800 text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all resize-none ${
+                      errors.message ? 'border-red-500' : 'border-slate-700'
+                    }`}
                     placeholder="Votre message..."
                   />
+                  {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
                 </div>
                 
                 <button

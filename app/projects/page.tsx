@@ -1,6 +1,9 @@
+'use client';
+
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useState } from 'react';
 
 const projects = [
   {
@@ -167,6 +170,26 @@ const projects = [
 ];
 
 export default function Projects() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  const categories = ['all', 'IA', 'Éducation', 'Mobile', 'Web', 'SaaS', 'Entreprise', 'Blockchain', 'E-commerce'];
+
+  const filteredProjects = selectedCategory === 'all' 
+    ? projects 
+    : projects.filter(project => 
+        project.tags.some(tag => 
+          tag.toLowerCase() === selectedCategory.toLowerCase() ||
+          (selectedCategory === 'IA' && tag === 'IA') ||
+          (selectedCategory === 'Éducation' && tag === 'Éducation') ||
+          (selectedCategory === 'Mobile' && tag === 'Mobile') ||
+          (selectedCategory === 'Web' && tag === 'Web') ||
+          (selectedCategory === 'SaaS' && tag === 'SaaS') ||
+          (selectedCategory === 'Entreprise' && tag === 'Entreprise') ||
+          (selectedCategory === 'Blockchain' && tag === 'Blockchain') ||
+          (selectedCategory === 'E-commerce' && tag === 'E-commerce')
+        )
+      );
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
@@ -179,9 +202,25 @@ export default function Projects() {
           <p className="text-center text-slate-400 text-xl mb-12">
             Une sélection de mes travaux personnels et entrepreneuriaux
           </p>
+
+          <div className="flex flex-wrap gap-3 justify-center mb-12">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                  selectedCategory === category
+                    ? 'bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-[0_0_20px_rgba(124,58,237,0.4)]'
+                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white border border-slate-700'
+                }`}
+              >
+                {category === 'all' ? 'Tous' : category}
+              </button>
+            ))}
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
+            {filteredProjects.map((project) => (
               <div
                 key={project.id}
                 className={`bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all hover:-translate-y-0.5 ${

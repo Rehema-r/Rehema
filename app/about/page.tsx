@@ -59,6 +59,40 @@ export default function About() {
 
           <section className="mb-16">
             <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+              Mon Parcours
+            </h2>
+            <div className="max-w-4xl mx-auto">
+              <div className="relative border-l-2 border-cyan-400/30 ml-4 space-y-8">
+                <div className="relative pl-8">
+                  <div className="absolute left-0 top-0 w-4 h-4 bg-cyan-400 rounded-full -translate-x-1/2 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                  <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <h3 className="text-xl font-bold text-cyan-400 mb-2">2024 - Présent</h3>
+                    <p className="text-white font-semibold mb-2">BAC2 Informatique - UNIKOL</p>
+                    <p className="text-slate-400">Études en développement logiciel, bases de données et architecture logicielle à l'Université de Kolwezi.</p>
+                  </div>
+                </div>
+                <div className="relative pl-8">
+                  <div className="absolute left-0 top-0 w-4 h-4 bg-cyan-400 rounded-full -translate-x-1/2 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                  <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <h3 className="text-xl font-bold text-cyan-400 mb-2">2023 - Présent</h3>
+                    <p className="text-white font-semibold mb-2">Co-Fondateur - RM Micro-Entreprise</p>
+                    <p className="text-slate-400">Co-fondation d'une micro-entreprise technologique offrant des services de développement et consulting.</p>
+                  </div>
+                </div>
+                <div className="relative pl-8">
+                  <div className="absolute left-0 top-0 w-4 h-4 bg-cyan-400 rounded-full -translate-x-1/2 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                  <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <h3 className="text-xl font-bold text-cyan-400 mb-2">2022 - 2023</h3>
+                    <p className="text-white font-semibold mb-2">Développement Personnel</p>
+                    <p className="text-slate-400">Apprentissage autodidacte en programmation, développement web et mobile, et intelligence artificielle.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
               Ma Vision
             </h2>
             <div className="max-w-4xl mx-auto text-center">
