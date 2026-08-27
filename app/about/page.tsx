@@ -1,180 +1,39 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Link from "next/link";
 
-export default function About() {
+export const metadata: Metadata = { title: "À propos", description: "Parcours, vision et démarche de Rehema Kasongo." };
+
+export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
-      <Navbar />
-      
-      <main className="pt-24 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-5xl font-bold text-center mb-4 text-white drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]">
-            À propos de moi
-          </h1>
-          <p className="text-center text-slate-400 text-xl mb-12">
-            Digital Architect · Full-Stack Developer · AI Systems Builder
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-            <div className="order-2 md:order-1">
-              <h2 className="text-3xl font-bold mb-4 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-                REHEMA KASONGO
-              </h2>
-              <p className="text-slate-400 mb-4 text-lg">
-                Étudiant en BAC2 Informatique à l'UNIKOL (Université de Kolwezi), passionné par le développement logiciel et l'innovation technologique.
-              </p>
-              <p className="text-slate-400 mb-4">
-                Je me spécialise dans le développement Full-Stack, l'architecture logicielle moderne et l'intégration de l'intelligence artificielle dans les applications. Mon objectif est de créer des solutions numériques innovantes qui répondent aux besoins réels des utilisateurs et des entreprises.
-              </p>
-              <div className="mt-8 space-y-4">
-                <div className="flex justify-between py-3 border-b border-slate-700">
-                  <span className="font-semibold text-white">Nom</span>
-                  <span className="text-slate-400">REHEMA KASONGO</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-slate-700">
-                  <span className="font-semibold text-white">Études</span>
-                  <span className="text-slate-400">BAC2 Informatique - UNIKOL</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-slate-700">
-                  <span className="font-semibold text-white">Spécialisation</span>
-                  <span className="text-slate-400">Full-Stack Development</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-slate-700">
-                  <span className="font-semibold text-white">Localisation</span>
-                  <span className="text-slate-400">Kolwezi, RD Congo</span>
-                </div>
-              </div>
-            </div>
-            <div className="order-1 md:order-2 flex justify-center">
-              <Image
-                src="/images/rehema-profil.jpeg"
-                alt="REHEMA KASONGO"
-                width={400}
-                height={400}
-                className="rounded-xl border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.5)]"
-              />
-            </div>
+    <>
+      <div className="section-shell page-shell">
+        <header className="about-hero">
+          <div className="about-title"><p className="eyebrow">Derrière les projets</p><h1>Curieux par nature, <em>bâtisseur</em> par choix.</h1></div>
+          <div className="about-photo"><Image src="/images/rehema-profil.jpeg" alt="Rehema Kasongo à Kolwezi" fill priority sizes="(max-width: 800px) 92vw, 45vw" className="portrait-image" /></div>
+          <div className="about-lead"><p>Je suis Rehema Kasongo, étudiant en deuxième année d’informatique à l’Université de Kolwezi et développeur full-stack en construction constante.</p><p>Je m’intéresse à l’ensemble du cycle produit : comprendre un besoin, structurer une solution, créer l’interface, développer les services et préparer le déploiement.</p></div>
+        </header>
+
+        <section className="story-section">
+          <div><p className="eyebrow">Mon parcours</p><h2>Une progression guidée par la pratique.</h2></div>
+          <div className="timeline">
+            <article><span>2022 — 2023</span><h3>Premiers apprentissages</h3><p>Découverte autonome de la programmation, du web, du mobile et des possibilités offertes par l’intelligence artificielle.</p></article>
+            <article><span>2023 — Aujourd’hui</span><h3>Cofondation de RM Tech</h3><p>Création d’une micro-entreprise pour relier apprentissage technique, services numériques et besoins locaux.</p></article>
+            <article><span>2024 — Aujourd’hui</span><h3>Informatique à l’UNIKOL</h3><p>Consolidation des fondamentaux en développement logiciel, bases de données et architecture à l’Université de Kolwezi.</p></article>
           </div>
+        </section>
+      </div>
 
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-              Mon Parcours
-            </h2>
-            <div className="max-w-4xl mx-auto">
-              <div className="relative border-l-2 border-cyan-400/30 ml-4 space-y-8">
-                <div className="relative pl-8">
-                  <div className="absolute left-0 top-0 w-4 h-4 bg-cyan-400 rounded-full -translate-x-1/2 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
-                  <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                    <h3 className="text-xl font-bold text-cyan-400 mb-2">2024 - Présent</h3>
-                    <p className="text-white font-semibold mb-2">BAC2 Informatique - UNIKOL</p>
-                    <p className="text-slate-400">Études en développement logiciel, bases de données et architecture logicielle à l'Université de Kolwezi.</p>
-                  </div>
-                </div>
-                <div className="relative pl-8">
-                  <div className="absolute left-0 top-0 w-4 h-4 bg-cyan-400 rounded-full -translate-x-1/2 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
-                  <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                    <h3 className="text-xl font-bold text-cyan-400 mb-2">2023 - Présent</h3>
-                    <p className="text-white font-semibold mb-2">Co-Fondateur - RM Micro-Entreprise</p>
-                    <p className="text-slate-400">Co-fondation d'une micro-entreprise technologique offrant des services de développement et consulting.</p>
-                  </div>
-                </div>
-                <div className="relative pl-8">
-                  <div className="absolute left-0 top-0 w-4 h-4 bg-cyan-400 rounded-full -translate-x-1/2 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
-                  <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                    <h3 className="text-xl font-bold text-cyan-400 mb-2">2022 - 2023</h3>
-                    <p className="text-white font-semibold mb-2">Développement Personnel</p>
-                    <p className="text-slate-400">Apprentissage autodidacte en programmation, développement web et mobile, et intelligence artificielle.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+      <section className="manifesto">
+        <div className="section-shell manifesto-inner"><p className="eyebrow eyebrow-light">Ma vision</p><blockquote>Créer depuis Kolwezi, avec les standards du monde et les réalités du terrain.</blockquote><p>Je veux contribuer à des produits accessibles, utiles aux communautés locales et assez solides pour évoluer au-delà de leur point de départ.</p></div>
+      </section>
 
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-              Ma Vision
-            </h2>
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-slate-400 text-lg leading-relaxed mb-8">
-                Je crois que la technologie doit être un levier de transformation positive pour les communautés locales. Mon objectif est de créer des solutions numériques accessibles, performantes et adaptées aux réalités africaines, tout en maintenant les standards internationaux de qualité.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                <div className="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all hover:-translate-y-0.5">
-                  <div className="text-4xl mb-4">🎯</div>
-                  <h3 className="text-xl font-bold mb-2 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Innovation</h3>
-                  <p className="text-slate-400 text-sm">Explorer de nouvelles technologies et créer des solutions innovantes</p>
-                </div>
-                <div className="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all hover:-translate-y-0.5">
-                  <div className="text-4xl mb-4">🌍</div>
-                  <h3 className="text-xl font-bold mb-2 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Impact Local</h3>
-                  <p className="text-slate-400 text-sm">Créer des solutions adaptées aux besoins de ma communauté</p>
-                </div>
-                <div className="bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all hover:-translate-y-0.5">
-                  <div className="text-4xl mb-4">📚</div>
-                  <h3 className="text-xl font-bold mb-2 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Apprentissage</h3>
-                  <p className="text-slate-400 text-sm">Continuer à apprendre et me perfectionner constamment</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-              Micro-Entreprise RM
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div className="flex justify-center">
-                <Image
-                  src="/images/rm_logo.png"
-                  alt="RM Logo"
-                  width={300}
-                  height={300}
-                  className="rounded-xl border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.5)]"
-                />
-              </div>
-              <div>
-                <p className="text-slate-400 mb-4 text-lg">
-                  Je suis co-fondateur de RM, une micro-entreprise technologique offrant des services de développement et de consulting.
-                </p>
-                <p className="text-slate-400 mb-4">
-                  <strong>Services :</strong> Développement web et mobile, Consulting technique, Formation, Solutions sur mesure.
-                </p>
-                <p className="text-slate-400">
-                  <strong>Philosophie :</strong> Innovation locale, Qualité professionnelle, Accessibilité pour les PME et startups.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-              Co-Fondateur
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div>
-                <p className="text-slate-400 mb-4 text-lg">
-                  Ensemble avec mon co-fondateur, nous construisons des solutions technologiques pour répondre aux besoins locaux.
-                </p>
-                <p className="text-slate-400">
-                  Notre collaboration combine nos compétences complémentaires pour offrir des services de qualité supérieure à nos clients.
-                </p>
-              </div>
-              <div className="flex justify-center">
-                <Image
-                  src="/images/medard-co-fondateur.jpeg"
-                  alt="Co-Fondateur"
-                  width={300}
-                  height={300}
-                  className="rounded-xl border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.5)]"
-                />
-              </div>
-            </div>
-          </section>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
+      <div className="section-shell section-block">
+        <section className="rm-section">
+          <div className="rm-logo"><Image src="/images/rm_logo.png" alt="Logo RM Tech" fill sizes="(max-width: 700px) 80vw, 34vw" className="cover-image" /></div>
+          <div><p className="eyebrow">Entrepreneuriat</p><h2>RM Tech, apprendre en servant.</h2><p>Avec mon cofondateur, nous développons une initiative technologique de proximité autour du développement web et mobile, du conseil et de la formation.</p><ul className="plain-list"><li>Solutions numériques sur mesure</li><li>Accompagnement technique</li><li>Formation et transmission</li><li>Attention portée aux PME et initiatives locales</li></ul><Link href="/contact" className="button button-outline">Parler d’une collaboration <span aria-hidden="true">↗</span></Link></div>
+        </section>
+      </div>
+    </>
   );
 }

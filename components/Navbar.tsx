@@ -1,76 +1,62 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+
+const links = [
+  { href: "/", label: "Accueil" },
+  { href: "/projects", label: "Projets" },
+  { href: "/skills", label: "Compétences" },
+  { href: "/about", label: "À propos" },
+  { href: "/certifications", label: "Formations" },
+];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-2xl font-bold text-cyan-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]">
-            REHEMA.
-          </Link>
-          
-          <div className="hidden md:flex space-x-8">
-            <Link href="/" className="text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-              Accueil
+    <header className="site-header">
+      <div className="nav-shell">
+        <Link href="/" className="brand" aria-label="Accueil — Rehema Kasongo">
+          <span className="brand-mark">RK</span>
+          <span className="brand-name">Rehema Kasongo</span>
+        </Link>
+        <nav className="desktop-nav" aria-label="Navigation principale">
+          {links.map((link) => (
+            <Link key={link.href} href={link.href} className={pathname === link.href ? "nav-link active" : "nav-link"}>
+              {link.label}
             </Link>
-            <Link href="/about" className="text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-              À propos
-            </Link>
-            <Link href="/skills" className="text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-              Compétences
-            </Link>
-            <Link href="/projects" className="text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-              Projets
-            </Link>
-            <Link href="/certifications" className="text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-              Certificats
-            </Link>
-            <Link href="/contact" className="text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-              Contact
-            </Link>
-          </div>
-
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex flex-col space-y-1.5 p-2"
-            aria-label="Menu"
-          >
-            <span className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-            <span className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
-          </button>
-        </div>
+          ))}
+        </nav>
+        <Link href="/contact" className="button button-small nav-cta">
+          Me contacter <span aria-hidden="true">↗</span>
+        </Link>
+        <button
+          type="button"
+          className="menu-button"
+          aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setIsOpen((open) => !open)}
+        >
+          <span />
+          <span />
+        </button>
       </div>
-
-      {isOpen && (
-        <div className="md:hidden bg-slate-900/98 backdrop-blur-md border-t border-slate-700">
-          <div className="px-4 pt-2 pb-4 space-y-2">
-            <Link href="/" className="block text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300">
-              Accueil
-            </Link>
-            <Link href="/about" className="block text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300">
-              À propos
-            </Link>
-            <Link href="/skills" className="block text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300">
-              Compétences
-            </Link>
-            <Link href="/projects" className="block text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300">
-              Projets
-            </Link>
-            <Link href="/certifications" className="block text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300">
-              Certificats
-            </Link>
-            <Link href="/contact" className="block text-white hover:text-cyan-400 hover:bg-cyan-400/10 px-3 py-2 rounded-md transition-all duration-300">
-              Contact
-            </Link>
-          </div>
-        </div>
-      )}
-    </nav>
+      <nav id="mobile-navigation" className={isOpen ? "mobile-nav open" : "mobile-nav"} aria-label="Navigation mobile">
+        {[...links, { href: "/contact", label: "Contact" }].map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={pathname === link.href ? "mobile-link active" : "mobile-link"}
+            onClick={() => setIsOpen(false)}
+          >
+            {link.label}<span aria-hidden="true">↗</span>
+          </Link>
+        ))}
+      </nav>
+    </header>
   );
 }
