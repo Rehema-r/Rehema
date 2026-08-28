@@ -1,0 +1,281 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+enum ProjectStatus {
+  CONCEPT
+  PROTOTYPE
+  IN_PROGRESS
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum SkillLevel {
+  EXPLORING
+  PRACTICING
+  AUTONOMOUS
+  ADVANCED
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum MessageStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+enum MediaKind {
+  IMAGE
+  VIDEO
+  DOCUMENT
+}
+
+enum EventType {
+  PAGE_VIEW
+  PROJECT_VIEW
+  PROJECT_DEMO_CLICK
+  REPOSITORY_CLICK
+  CV_DOWNLOAD
+  CONTACT_SENT
+  BLOG_READ
+  QUIZ_COMPLETED
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         UserRole @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Project {
+  id           String              @id @default(uuid()) @db.Uuid
+  slug         String              @unique
+  title        String
+  summary      String
+  description  String              @db.Text
+  outcome      String?             @db.Text
+  status       ProjectStatus       @default(CONCEPT)
+  featured     Boolean             @default(false)
+  published    Boolean             @default(true)
+  repository   String?
+  demoUrl      String?
+  coverImage   String?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  order        Int                 @default(0)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  technologies ProjectTechnology[]
+  categories   ProjectCategory[]
+  media        Media[]
+  events       VisitorEvent[]
+
+  @@index([published, featured, order])
+  @@index([status])
+}
+
+model Technology {
+  id        String              @id @default(uuid()) @db.Uuid
+  name      String              @unique
+  slug      String              @unique
+  icon      String?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  projects  ProjectTechnology[]
+}
+
+model ProjectTechnology {
+  projectId    String     @db.Uuid
+  technologyId String     @db.Uuid
+  order        Int        @default(0)
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, technologyId])
+}
+
+model Category {
+  id          String            @id @default(uuid()) @db.Uuid
+  name        String            @unique
+  slug        String            @unique
+  description String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  projects    ProjectCategory[]
+}
+
+model ProjectCategory {
+  projectId  String   @db.Uuid
+  categoryId String   @db.Uuid
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, categoryId])
+}
+
+model SkillCategory {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  skills      Skill[]
+}
+
+model Skill {
+  id          String        @id @default(uuid()) @db.Uuid
+  name        String        @unique
+  slug        String        @unique
+  description String?
+  level       SkillLevel    @default(PRACTICING)
+  icon        String?
+  order       Int           @default(0)
+  visible     Boolean       @default(true)
+  categoryId  String        @db.Uuid
+  category    SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([categoryId, order])
+}
+
+model JourneyItem {
+  id           String    @id @default(uuid()) @db.Uuid
+  title        String
+  organization String?
+  description  String    @db.Text
+  startDate    DateTime
+  endDate      DateTime?
+  current      Boolean   @default(false)
+  technologies String[]
+  order        Int       @default(0)
+  visible      Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([visible, order])
+}
+
+model BlogCategory {
+  id          String     @id @default(uuid()) @db.Uuid
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  posts       BlogPost[]
+}
+
+model BlogPost {
+  id          String        @id @default(uuid()) @db.Uuid
+  slug        String        @unique
+  title       String
+  excerpt     String
+  content     String        @db.Text
+  coverImage  String?
+  status      PostStatus    @default(DRAFT)
+  publishedAt DateTime?
+  readingTime Int           @default(1)
+  views       Int           @default(0)
+  categoryId  String?       @db.Uuid
+  category    BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  media       Media[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([categoryId])
+}
+
+model Message {
+  id        String        @id @default(uuid()) @db.Uuid
+  name      String
+  email     String
+  subject   String
+  body      String        @db.Text
+  status    MessageStatus @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model SocialLink {
+  id        String   @id @default(uuid()) @db.Uuid
+  platform  String
+  label     String
+  url       String
+  order     Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([platform, url])
+  @@index([visible, order])
+}
+
+model Media {
+  id         String    @id @default(uuid()) @db.Uuid
+  name       String
+  url        String
+  alt        String?
+  mimeType   String
+  kind       MediaKind @default(IMAGE)
+  size       Int?
+  projectId  String?   @db.Uuid
+  blogPostId String?   @db.Uuid
+  project    Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  blogPost   BlogPost? @relation(fields: [blogPostId], references: [id], onDelete: SetNull)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([projectId])
+  @@index([blogPostId])
+}
+
+model SiteSetting {
+  id        String   @id @default(uuid()) @db.Uuid
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VisitorEvent {
+  id        String    @id @default(uuid()) @db.Uuid
+  type      EventType
+  path      String?
+  referrer  String?
+  sessionId String?
+  metadata  Json?
+  projectId String?   @db.Uuid
+  project   Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdAt DateTime  @default(now())
+
+  @@index([type, createdAt])
+  @@index([projectId, createdAt])
+  @@index([path, createdAt])
+}

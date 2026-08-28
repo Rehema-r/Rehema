@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: rehema_universe
+      POSTGRES_USER: rehema
+      POSTGRES_PASSWORD: rehema-local-only
+    ports:
+      - "5432:5432"
+    volumes:
+      - rehema_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rehema -d rehema_universe"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://rehema:rehema-local-only@postgres:5432/rehema_universe
+      DIRECT_URL: postgresql://rehema:rehema-local-only@postgres:5432/rehema_universe
+      AUTH_SECRET: ${AUTH_SECRET:-local-development-secret-change-before-production}
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  rehema_postgres:

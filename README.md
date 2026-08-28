@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rehema Digital Universe
 
-## Getting Started
+Portfolio applicatif de Rehema Kasongo construit avec Next.js 16, React 19, TypeScript, Prisma 7 et PostgreSQL. Le projet sépare les routes, les fonctionnalités et l’infrastructure afin de pouvoir ajouter une administration complète sans fragiliser le site public.
 
-First, run the development server:
+## Prérequis
+
+- Node.js 24 recommandé (20.19+ minimum pour Prisma 7)
+- npm 10+
+- PostgreSQL 16+ ou Docker Desktop
+
+## Installation
 
 ```bash
+npm install
+copy .env.example .env.local
+npm run db:generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Le site public fonctionne avec les données de secours versionnées même sans PostgreSQL. La persistance des messages, les analytics et la connexion admin exigent la base de données.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables d’environnement
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Usage |
+| --- | --- |
+| `DATABASE_URL` | Connexion PostgreSQL utilisée par l’application |
+| `DIRECT_URL` | Connexion directe utilisée pour les migrations |
+| `AUTH_SECRET` | Signature des sessions Auth.js |
+| `ADMIN_EMAIL` | Email créé par le seed |
+| `ADMIN_PASSWORD` | Mot de passe du seed, 12 caractères minimum |
+| `NEXT_PUBLIC_SITE_URL` | URL canonique du portfolio |
 
-## Learn More
+Ne jamais committer `.env.local` ni un secret réel.
 
-To learn more about Next.js, take a look at the following resources:
+## PostgreSQL et Prisma
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Avec une base locale disponible :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run db:migrate
+npm run db:seed
+npm run db:studio
+```
 
-## Deploy on Vercel
+En production, utiliser `npm run db:deploy` pour appliquer les migrations déjà versionnées.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Docker
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+docker compose up -d postgres
+npm run db:migrate
+npm run db:seed
+docker compose up --build app
+```
+
+Le mot de passe PostgreSQL du fichier Compose est uniquement destiné au développement local.
+
+## Vérifications
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
+
+## Architecture
+
+```text
+app/          routes publiques, admin et API
+components/   primitives de layout, mouvement et interface
+features/     logique et composants regroupés par domaine
+lib/          base de données, authentification, sécurité, constantes
+prisma/       schéma, migration initiale et seed
+public/       images et futurs documents publics
+docs/         décisions d’architecture et procédures
+```
+
+Le groupe `app/(public)` n’ajoute aucun segment à l’URL. L’administration vit sous `/admin`, les services sous `/api`, et `proxy.ts` protège les routes de gestion conformément à Next.js 16.
+
+## Monétisation Adsterra
+
+Le domaine `rehema-gules.vercel.app` est enregistré dans Adsterra sous l’identifiant `6014590`. Les composants de `features/ads` chargent les scripts après l’hydratation afin de préserver le rendu initial :
+
+- Native Banner dans le journal ;
+- bannière `728×90` sur ordinateur ;
+- bannière `320×50` sur mobile.
+
+Les formats intrusifs Popunder et Social Bar ainsi que les publicités adultes sont désactivés.
+
+## Déploiement Vercel
+
+1. Créer ou connecter une base PostgreSQL.
+2. Ajouter les variables d’environnement au projet Vercel.
+3. Exécuter la migration de production depuis un environnement autorisé.
+4. Exécuter le seed une seule fois avec un mot de passe fort.
+5. Déployer la branche `main`.
+
+Le script `postinstall` génère automatiquement Prisma Client pendant le build.
