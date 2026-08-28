@@ -96,3 +96,4 @@ Les formats intrusifs Popunder et Social Bar ainsi que les publicités adultes s
 5. Déployer la branche `main`.
 
 Le script `postinstall` génère automatiquement Prisma Client pendant le build.
+Le mode `standalone` est réservé à l’image Docker et désactivé automatiquement dans l’environnement Vercel.
