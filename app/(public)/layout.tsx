@@ -7,10 +7,10 @@ export default function PublicLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="public-universe">
       <Navbar />
-      <main id="contenu"><PageTransition>{children}</PageTransition></main>
       <div className="page-container">
         <AdsterraResponsiveBanner />
       </div>
+      <main id="contenu"><PageTransition>{children}</PageTransition></main>
       <Footer />
     </div>
   );
