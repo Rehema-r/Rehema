@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageContainer } from "@/components/layout/page-container";
 import { SectionTitle } from "@/components/shared/section-title";
-import { AdsterraResponsiveBanner } from "@/features/ads/components/adsterra-units";
 import { posts } from "@/features/blog/data/posts";
 import { FinalCta } from "@/features/home/components/final-cta";
 import { FeaturedProjects } from "@/features/home/components/featured-projects";
@@ -15,7 +14,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <PageContainer><StatsSection /><FeaturedProjects /><AdsterraResponsiveBanner /></PageContainer>
+      <PageContainer><StatsSection /><FeaturedProjects /></PageContainer>
       <SkillsPreview />
       <PageContainer>
         <section className="content-section dual-preview">

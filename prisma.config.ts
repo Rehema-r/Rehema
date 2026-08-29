@@ -10,6 +10,7 @@ export default defineConfig({
   datasource: {
     url:
       process.env.DIRECT_URL ??
+      process.env.DATABASE_URL_UNPOOLED ??
       process.env.DATABASE_URL ??
       "postgresql://rehema:rehema@localhost:5432/rehema_universe",
   },

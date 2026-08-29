@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 const BANNER_UNITS = {
   desktop: {
@@ -41,6 +42,7 @@ function renderBanner(host: HTMLDivElement, mobile: boolean) {
 
 export function AdsterraResponsiveBanner() {
   const hostRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const host = hostRef.current;
@@ -56,7 +58,7 @@ export function AdsterraResponsiveBanner() {
       media.removeEventListener("change", refresh);
       host.replaceChildren();
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <aside className="adsterra-placement adsterra-banner no-print" aria-label="Publicité">
