@@ -1,4 +1,7 @@
 export type ProjectStatus =
+  | "En ligne"
+  | "Fonctionnel"
+  | "Expérimental"
   | "Concept"
   | "Prototype"
   | "En développement"

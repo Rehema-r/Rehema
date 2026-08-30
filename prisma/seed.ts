@@ -3,7 +3,6 @@ import { hash } from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
 import { posts } from "../features/blog/data/posts";
-import { journey } from "../features/journey/data/journey";
 import { projects } from "../features/projects/data";
 import { skillGroups } from "../features/skills/data/skills";
 
@@ -13,6 +12,9 @@ if (!connectionString) throw new Error("DATABASE_URL est nécessaire pour exécu
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
 
 const statusMap = {
+  "En ligne": "ACTIVE",
+  "Fonctionnel": "ACTIVE",
+  "Expérimental": "PROTOTYPE",
   "Concept": "CONCEPT",
   "Prototype": "PROTOTYPE",
   "En développement": "IN_PROGRESS",
@@ -66,12 +68,7 @@ async function seedSkills() {
 }
 
 async function seedJourneyAndBlog() {
-  for (const [order, item] of journey.entries()) {
-    const existing = await prisma.journeyItem.findFirst({ where: { title: item.title } });
-    const data = { title: item.title, organization: item.organization, description: item.description, startDate: new Date(`${2022 + Math.min(order, 3)}-01-01`), current: item.period.includes("Aujourd’hui") || item.period === "Maintenant", technologies: item.technologies, order };
-    if (existing) await prisma.journeyItem.update({ where: { id: existing.id }, data });
-    else await prisma.journeyItem.create({ data });
-  }
+  // Exact journey dates are not confirmed. Preserve existing records.
   for (const post of posts) {
     const categorySlug = post.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     const category = await prisma.blogCategory.upsert({ where: { slug: categorySlug }, update: { name: post.category }, create: { slug: categorySlug, name: post.category } });

@@ -6,5 +6,5 @@ import { ProjectExplorer } from "@/features/projects/components/project-explorer
 export const metadata: Metadata = { title: "Project Explorer", description: "Explorer les projets de Rehema en grille ou dans une carte d’univers interactive." };
 
 export default function ProjectsPage() {
-  return <PageContainer className="route-page"><PageHeader index="01" eyebrow="Project Explorer" title={<>Quatorze initiatives. <em>Un seul univers.</em></>} copy="Filtrez, recherchez et ouvrez chaque projet. Le mode Univers propose une cartographie légère sans bloquer l’accès à la grille." /><ProjectExplorer /></PageContainer>;
+  return <PageContainer className="route-page"><PageHeader index="01" eyebrow="Project Explorer" title={<>Des projets. <em>Des preuves.</em></>} copy="Réalisations, projets en développement et concepts : chaque fiche indique son état et les éléments disponibles. Les domaines d’exploration ne sont pas des compétences maîtrisées." /><ProjectExplorer /></PageContainer>;
 }

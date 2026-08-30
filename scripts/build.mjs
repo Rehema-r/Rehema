@@ -3,8 +3,6 @@ import { resolve } from "node:path";
 
 const executables = {
   next: resolve("node_modules/next/dist/bin/next"),
-  prisma: resolve("node_modules/prisma/build/index.js"),
-  tsx: resolve("node_modules/tsx/dist/cli.mjs"),
 };
 
 function run(name, args) {
@@ -19,14 +17,6 @@ function run(name, args) {
   }
 }
 
-if (process.env.VERCEL && process.env.DATABASE_URL) {
-  console.info("Vercel: application des migrations Prisma.");
-  run("prisma", ["migrate", "deploy"]);
-
-  if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
-    console.info("Vercel: initialisation des données et du compte administrateur.");
-    run("tsx", ["prisma/seed.ts"]);
-  }
-}
-
+// Database migrations and seeding are explicit maintenance operations.
+// Editorial deployments must never reset accounts or overwrite content.
 run("next", ["build"]);

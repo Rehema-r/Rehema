@@ -8,12 +8,12 @@ const monoFont = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://rehema-gules.vercel.app"),
   title: { default: "Rehema Digital Universe", template: "%s — Rehema Digital Universe" },
-  description: "L’univers numérique de Rehema Kasongo : projets, systèmes, apprentissages et expériences depuis Kolwezi.",
-  keywords: ["Rehema Kasongo", "développeur", "Kolwezi", "full-stack", "portfolio", "RD Congo"],
+  description: "Rehema Kasongo — étudiant en Bac 3 Génie Logiciel à Kolwezi. Réalisations logicielles, code public et progression documentée.",
+  keywords: ["Rehema Kasongo", "développeur", "Kolwezi", "Génie Logiciel", "portfolio", "RD Congo"],
   authors: [{ name: "Rehema Kasongo" }],
   openGraph: {
     title: "Rehema Digital Universe",
-    description: "Je conçois des applications, des systèmes et des expériences numériques.",
+    description: "Étudiant en Génie Logiciel et développeur logiciel. Des réalisations concrètes, des prototypes identifiés et une progression documentée.",
     type: "website",
     locale: "fr_CD",
   },

@@ -9,7 +9,7 @@ export function FeaturedProjects() {
   const featured = projects.filter((project) => project.featured);
   return (
     <section className="content-section" id="exploration">
-      <SectionTitle eyebrow="Project Explorer / Sélection" title={<>Systèmes en <em>orbite</em></>} copy="Des projets présentés avec leur niveau réel d’avancement, leur intention et les choix techniques qui les structurent." />
+      <SectionTitle eyebrow="Project Explorer / Sélection" title={<>Réalisations et <em>projets</em></>} copy="Les réalisations sont présentées en premier. Les projets techniques et les concepts sont explicitement distingués, avec leurs preuves et leurs limites." />
       <div className="projects-grid">{featured.map((project, index) => <RevealOnScroll key={project.slug} delay={index * 0.07}><ProjectCard project={project} index={index} /></RevealOnScroll>)}</div>
       <Link href="/projects" className="section-link">Ouvrir le Project Explorer complet <ArrowUpRight size={17} /></Link>
     </section>
