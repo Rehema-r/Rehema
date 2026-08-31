@@ -1,6 +1,7 @@
 export const publicNavigation = [
   { href: "/", label: "Univers" },
   { href: "/projects", label: "Projets" },
+  { href: "/services", label: "Services" },
   { href: "/skills", label: "Compétences" },
   { href: "/journey", label: "Parcours" },
   { href: "/blog", label: "Journal" },

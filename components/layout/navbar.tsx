@@ -33,7 +33,7 @@ export function Navbar() {
         {publicNavigation.map((item, index) => (
           <Link key={item.href} href={item.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{item.label}<ArrowUpRight size={17} aria-hidden="true" /></Link>
         ))}
-        <Link href="/contact" onClick={() => setOpen(false)}><span>07</span>Contact<ArrowUpRight size={17} aria-hidden="true" /></Link>
+        <Link href="/contact" onClick={() => setOpen(false)}><span>{String(publicNavigation.length + 1).padStart(2, "0")}</span>Contact<ArrowUpRight size={17} aria-hidden="true" /></Link>
       </nav>
     </header>
   );

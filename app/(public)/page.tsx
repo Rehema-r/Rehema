@@ -14,6 +14,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <PageContainer><div className="services-entry"><p>Freelance : petits besoins web, périmètre confirmé avant engagement.</p><Link href="/services" className="section-link">Services &amp; Work Samples <ArrowUpRight size={17} aria-hidden="true" /></Link></div></PageContainer>
       <PageContainer><StatsSection /><FeaturedProjects /></PageContainer>
       <SkillsPreview />
       <PageContainer>

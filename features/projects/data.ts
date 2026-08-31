@@ -38,17 +38,15 @@ export const projects: PortfolioProject[] = [
     "title": "RM Tech",
     "category": "Identité numérique",
     "status": "En ligne",
-    "summary": "Site et identité numérique présentés à travers ce portfolio.",
-    "description": "Ce portfolio présente le site, l’identité numérique et les projets associés à RM Tech. Il met en relation les réalisations, le code public et ma progression en Génie Logiciel, sans revendiquer un rôle de fondateur ou un emploi.",
-    "outcome": "Portfolio public avec fiches de projets et documentation. Next.js, React et TypeScript sont présents dans son code public.",
+    "summary": "Site public RM Tech, distinct de mon portfolio personnel.",
+    "description": "Le site RM Tech fait partie de mes réalisations web. Sa page publique est accessible sur rmtch.com. Mon portfolio personnel présente séparément mes projets et ma progression en Génie Logiciel, sans revendiquer un emploi ou une expertise senior.",
+    "outcome": "Site public consultable. Les espaces clients, fonctions internes et promesses commerciales du site ne constituent pas une démonstration de mes compétences personnelles en sécurité ou infrastructure.",
     "tags": [
-      "Next.js",
-      "React",
-      "TypeScript"
+      "Site web",
+      "Identité numérique"
     ],
     "image": "/images/rm_logo.png",
-    "repository": "https://github.com/Rehema-r/Rehema",
-    "demoUrl": "https://rehema-gules.vercel.app/",
+    "demoUrl": "https://rmtch.com/",
     "featured": true
   },
   {
