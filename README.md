@@ -94,7 +94,7 @@ Rehema Kasongo porte ce portfolio et la présentation de ses projets. Les outils
 1. Référencer la démonstration RM Study et sa documentation technique.
 2. Ajouter des preuves propres à chaque projet, sans données internes.
 3. Tester les parcours serveur et revoir les dépendances signalées par l’audit npm.
-4. Compléter les dates, l’établissement et les intitulés de formation uniquement après confirmation.
+4. Compléter les dates précises et les intitulés de certificats après confirmation. L’Université de Kolwezi et le Bac 3 en 2026 sont confirmés par le CV fourni.
 
 ## Screenshots / Demo
 

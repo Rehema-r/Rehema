@@ -9,8 +9,8 @@ export const journey = [
   {
     "period": "Actuellement",
     "title": "Bac 3 — Informatique — Génie Logiciel",
-    "organization": "Formation actuelle",
-    "description": "Étudiant en Génie Logiciel. Le nom de l’établissement sera précisé après confirmation.",
+    "organization": "Université de Kolwezi — RDC",
+    "description": "Bac 3 Informatique, filière Génie Logiciel, à l’Université de Kolwezi en 2026, selon le CV fourni.",
     "technologies": [
       "Génie Logiciel"
     ]

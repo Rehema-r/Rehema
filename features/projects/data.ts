@@ -59,10 +59,12 @@ export const projects: PortfolioProject[] = [
     "status": "En développement",
     "summary": "Exploration d’un assistant personnel et de l’orchestration de services.",
     "description": "REHEMA OS explore une organisation de services pour un assistant personnel. L’inférence locale, les outils et la persistance font partie des pistes à étudier. Aucune fonctionnalité opérationnelle ni architecture distribuée achevée n’est revendiquée sans démonstration.",
-    "outcome": "Projet en développement ; code, technologies réellement intégrées et procédure de lancement à documenter.",
+    "outcome": "Développement et expérimentation. Python, Docker, PostgreSQL, API et Ollama sont des technologies explorées selon le CV de l’auteur.",
     "tags": [
-      "Exploration IA",
-      "Orchestration"
+      "Python",
+      "Docker",
+      "PostgreSQL",
+      "Ollama"
     ],
     "featured": true
   },
@@ -71,13 +73,15 @@ export const projects: PortfolioProject[] = [
     "slug": "codel-academy",
     "title": "Codel Academy",
     "category": "Éducation",
-    "status": "Concept",
+    "status": "En développement",
     "summary": "Projet de plateforme d’apprentissage, dont le dépôt public est en cours de documentation.",
-    "description": "Codel Academy vise une plateforme de contenus et de parcours d’apprentissage. Le dépôt public ne contient pas d’implémentation. Aucun monorepo, backend ou déploiement fonctionnel n’est présenté comme réalisé sur la seule base de l’idée.",
-    "outcome": "Objectif pédagogique défini ; état du code non public et technologies effectives à confirmer. Le lien mène à la documentation, pas à une application.",
+    "description": "Architecture et technologies explorées selon le CV fourni par l’auteur. Le dépôt public reste documentaire, sans implémentation applicative publiée.",
+    "outcome": "Développement déclaré par l’auteur ; démonstration et documentation technique à compléter.",
     "tags": [
-      "Projet éducatif",
-      "Conception"
+      "NestJS",
+      "PostgreSQL",
+      "Prisma",
+      "Docker"
     ],
     "repository": "https://github.com/Rehema-r/codel-academy",
     "featured": true
@@ -87,13 +91,13 @@ export const projects: PortfolioProject[] = [
     "slug": "rehema-langue",
     "title": "Rehema Langue",
     "category": "Éducation",
-    "status": "Prototype",
+    "status": "En développement",
     "summary": "Prototype d’apprentissage des langues par leçons courtes.",
-    "description": "Le projet explore une expérience mobile de progression par leçons. L’état de prototype est conservé ; les fonctionnalités disponibles et la stack effective restent à documenter avec les sources ou une démonstration.",
-    "outcome": "L’IA est une piste d’évolution, pas une fonctionnalité intégrée annoncée.",
+    "description": "Développement et expérimentation d’une application Android d’apprentissage des langues, selon le CV de l’auteur. Démonstration et source à référencer.",
+    "outcome": "Développement déclaré par l’auteur ; démonstration et documentation technique à compléter.",
     "tags": [
-      "Mobile",
-      "Apprentissage des langues"
+      "Kotlin",
+      "Android Studio"
     ]
   },
   {
@@ -101,13 +105,15 @@ export const projects: PortfolioProject[] = [
     "slug": "rehema-api",
     "title": "Rehema API",
     "category": "Infrastructure",
-    "status": "Concept",
+    "status": "En développement",
     "summary": "Étude de services communs réutilisables entre projets.",
-    "description": "Le projet étudie la mutualisation de fonctions comme l’identité, les médias ou les notifications. Les endpoints, le framework et les mécanismes d’authentification seront présentés uniquement à partir du code réalisé.",
-    "outcome": "Concept technique ; aucune API opérationnelle ou garantie de disponibilité n’est annoncée.",
+    "description": "Conception de services backend réutilisables. Technologies déclarées dans le CV ; interfaces opérationnelles, tests et procédure de lancement à documenter.",
+    "outcome": "Développement déclaré par l’auteur ; démonstration et documentation technique à compléter.",
     "tags": [
+      "Python",
       "API",
-      "Conception backend"
+      "PostgreSQL",
+      "Docker"
     ]
   },
   {
@@ -115,10 +121,10 @@ export const projects: PortfolioProject[] = [
     "slug": "rehema-beats",
     "title": "Rehema Beats",
     "category": "Produit numérique",
-    "status": "Concept",
+    "status": "En développement",
     "summary": "Exploration d’un produit de découverte et de diffusion musicale.",
-    "description": "Le concept porte sur la musique, les artistes et les médias. Stockage, diffusion et expérience mobile sont des pistes de travail, sans promesse de service déjà opérationnel.",
-    "outcome": "Concept ; choix techniques et réalisation à documenter.",
+    "description": "Projet personnel de création et de diffusion musicale, en développement selon l’auteur. Aucune plateforme complète ni métrique d’usage n’est annoncée.",
+    "outcome": "Développement déclaré par l’auteur ; démonstration et documentation technique à compléter.",
     "tags": [
       "Musique",
       "Conception produit"
@@ -129,12 +135,12 @@ export const projects: PortfolioProject[] = [
     "slug": "rechat",
     "title": "Rechat",
     "category": "Produit numérique",
-    "status": "Concept",
+    "status": "En développement",
     "summary": "Étude d’une application de messagerie.",
-    "description": "Le projet explore l’identité, les conversations et la synchronisation. Les comptes, échanges temps réel et fonctions de modération ne sont pas présentés comme opérationnels.",
-    "outcome": "Concept ; aucune démonstration publique annoncée.",
+    "description": "Solution de communication numérique en conception et développement selon l’auteur. Démonstration fonctionnelle à documenter.",
+    "outcome": "Développement déclaré par l’auteur ; démonstration et documentation technique à compléter.",
     "tags": [
-      "Messagerie",
+      "Communication",
       "Conception"
     ]
   },
@@ -143,13 +149,13 @@ export const projects: PortfolioProject[] = [
     "slug": "mathforge",
     "title": "MathForge",
     "category": "Éducation",
-    "status": "Expérimental",
+    "status": "En développement",
     "summary": "Projet expérimental reliant les mathématiques aux usages informatiques.",
-    "description": "MathForge explore des parcours pédagogiques autour des mathématiques, de l’algorithmique et des réseaux. Le projet reste expérimental tant que la démonstration et le code correspondant ne sont pas présentés.",
-    "outcome": "Expérimentation ; exercices réellement disponibles et technologies à documenter.",
+    "description": "Projet pédagogique en développement pour un apprentissage pratique des mathématiques destiné aux développeurs et profils techniques.",
+    "outcome": "Développement déclaré par l’auteur ; démonstration et documentation technique à compléter.",
     "tags": [
-      "Mathématiques",
-      "Pédagogie"
+      "Mathématiques appliquées",
+      "Apprentissage numérique"
     ]
   },
   {
@@ -159,7 +165,7 @@ export const projects: PortfolioProject[] = [
     "category": "Recherche",
     "status": "Concept",
     "summary": "Étude des compromis d’un registre distribué.",
-    "description": "Une exploration des concepts de réseau, transactions et nœuds. Aucune blockchain opérationnelle, activité financière ou promesse de rendement n’est annoncée.",
+    "description": "Recherche et conception autour de la blockchain et des architectures décentralisées. Aucune chaîne opérationnelle, valeur financière ou rendement n’est annoncé.",
     "outcome": "Concept de recherche ; implémentation et note technique à documenter.",
     "tags": [
       "Blockchain",
