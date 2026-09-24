@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { posts } from "@/features/blog/data/posts";
-import { projects } from "@/features/projects/data";
+import { getPublicPosts, getPublicProjects } from "@/features/content/queries";
+export const dynamic = "force-dynamic";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [posts, projects] = await Promise.all([getPublicPosts(), getPublicProjects()]);
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rehema-gules.vercel.app";
   const routes = ["", "/about", "/projects", "/services", "/skills", "/journey", "/blog", "/playground", "/contact", "/resume"];
   return [

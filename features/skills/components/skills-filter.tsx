@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { skillGroups } from "@/features/skills/data/skills";
+import type { skillGroups as SkillGroups } from "@/features/skills/data/skills";
 
-export function SkillsFilter() {
+export function SkillsFilter({ skillGroups }: { skillGroups: typeof SkillGroups }) {
   const [active, setActive] = useState("Toutes");
   const visible = active === "Toutes" ? skillGroups : skillGroups.filter((group) => group.title === active);
   return (

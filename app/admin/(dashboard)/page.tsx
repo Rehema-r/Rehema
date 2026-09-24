@@ -1,15 +1,10 @@
+import Link from "next/link";
 import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
-import { SetupNotice } from "@/features/admin/components/setup-notice";
-import { projects } from "@/features/projects/data";
-import { posts } from "@/features/blog/data/posts";
-import { getPrisma, isDatabaseConfigured } from "@/lib/db/prisma";
+import { requireAdmin } from "@/lib/auth/require-admin";
 
 export default async function AdminDashboardPage() {
-  const db = getPrisma();
-  const persisted = isDatabaseConfigured() && db;
-  const [messages, events] = persisted ? await Promise.all([db.message.count({ where: { status: "NEW" } }), db.visitorEvent.count()]) : [0, 0];
-  const stats = [
-    ["Projets", projects.length], ["Articles publiés", posts.length], ["Nouveaux messages", messages], ["Événements", events],
-  ];
-  return <><AdminPageHeader eyebrow="Dashboard / Overview" title="Vue d’ensemble" copy="État actuel de Rehema Digital Universe" />{!persisted ? <SetupNotice>Les contenus publics utilisent les données de secours versionnées. Connectez PostgreSQL pour activer les messages, les analytics et les opérations persistantes.</SetupNotice> : null}<section className="admin-stat-grid">{stats.map(([label, value], index) => <article key={String(label)}><span>0{index + 1}</span><strong>{value}</strong><p>{label}</p></article>)}</section><section className="admin-panel"><h2>État des systèmes</h2><div className="system-status-list"><p><span className="status-dot online" /> Interface publique <strong>Opérationnelle</strong></p><p><span className={`status-dot ${persisted ? "online" : "waiting"}`} /> PostgreSQL <strong>{persisted ? "Connecté" : "À configurer"}</strong></p><p><span className="status-dot online" /> Validation et API <strong>Opérationnelles</strong></p></div></section></>;
+  const { db } = await requireAdmin();
+  const [projects, posts, messages, events] = await Promise.all([db.project.count(), db.blogPost.count({ where: { status: "PUBLISHED", publishedAt: { lte: new Date() } } }), db.message.count({ where: { status: "NEW" } }), db.visitorEvent.count()]);
+  const stats = [["Projets", projects, "/admin/projects"], ["Articles publiés", posts, "/admin/blog"], ["Nouveaux messages", messages, "/admin/messages"], ["Événements", events, "/admin/analytics"]] as const;
+  return <><AdminPageHeader eyebrow="Tableau de bord" title="Vue d’ensemble" copy="Données réelles de votre portfolio, actualisées depuis PostgreSQL." /><section className="admin-stat-grid">{stats.map(([label, value, href], index) => <article key={label}><span>0{index + 1}</span><strong>{value}</strong><Link href={href}>{label} ↗</Link></article>)}</section><section className="admin-panel"><h2>Accès rapides</h2><div className="admin-toolbar"><Link className="primary-action" href="/admin/projects/new">Ajouter un projet</Link><Link href="/admin/blog/new">Rédiger un article</Link><Link href="/admin/settings">Modifier mes coordonnées</Link></div><p>Les brouillons et éléments masqués restent privés. Les changements publiés apparaissent sur le portfolio immédiatement.</p></section></>;
 }

@@ -4,43 +4,43 @@
 
 [Portfolio public](https://rehema-gules.vercel.app/) · [Profil GitHub](https://github.com/Rehema-r) · [LinkedIn](https://www.linkedin.com/in/rehema-kasongo-4868292a9/)
 
-## Overview
+## Présentation
 
-Portfolio d’un étudiant en Bac 3 Informatique, filière Génie Logiciel, à Kolwezi (RDC). Le site présente les projets, le parcours, les domaines de pratique et d’apprentissage, ainsi qu’un CV web imprimable. Il distingue réalisations, prototypes et concepts.
+Portfolio d’un étudiant en Bac 3 Informatique, filière Génie Logiciel, à Kolwezi (RDC). Il présente les réalisations, les projets en développement, les concepts, le parcours, les domaines de pratique et un CV web imprimable. Les pages publiques et l’administration utilisent les mêmes contenus PostgreSQL lorsqu’une base est configurée.
 
-## Problem / Solution
+Les réalisations confirmées RM Study, Union Company et RM Tech sont distinguées des expérimentations et concepts. Aucune métrique, certification, relation d’emploi ou maturité technique non confirmée n’est inventée.
 
-Un catalogue de projets ne permet pas à lui seul d’évaluer leur maturité. Chaque fiche indique donc un objectif, un état, les éléments techniques documentés et les liens disponibles. Les réalisations RM Study, Union Company et RM Tech précèdent les projets techniques en développement.
+## Fonctionnalités
 
-## Features
-
-- Pages publiques : accueil, projets et fiches détaillées, parcours, compétences, journal, contact, CV.
-- Catalogue filtrable et statuts explicites, avec liens publics lorsqu’ils sont disponibles.
-- Données éditoriales versionnées dans `features/` ; le catalogue public et `/api/projects` utilisent les données statiques.
-- Code d’administration, Auth.js, routes API, schéma Prisma et migrations présents. Leur présence ne constitue pas une validation opérationnelle ou un audit de sécurité.
-- Le formulaire de contact et les fonctions persistantes nécessitent une configuration serveur et une base accessibles.
+- Pages publiques : accueil, services, projets et fiches, parcours, compétences, journal, contact et CV.
+- Catalogue filtrable de 14 réalisations et projets connus, avec statuts, preuves et liens disponibles.
+- Administration sécurisée : projets, articles, compétences, catégories, parcours, messages, coordonnées, annonces et statistiques.
+- Brouillons, publication programmée, archivage et masquage sans suppression destructive.
+- Messages persistés et classables ; réponse via la messagerie de l’administrateur.
+- Statistiques agrégées sans cookie d’analyse, adresse IP ou identifiant de visiteur conservé dans les événements.
+- Bannière Adsterra responsive sur les pages publiques, désactivable dans les paramètres.
 
 ## Technologies
 
-Next.js 16, React 19, TypeScript, Tailwind CSS 4, Prisma 7, PostgreSQL, Auth.js et configuration Docker. Les versions exactes sont verrouillées dans `package-lock.json`. Cette liste décrit le code, pas un niveau d’expertise personnel.
+Next.js 16, React 19, TypeScript, Tailwind CSS 4, Prisma 7, PostgreSQL, Auth.js et Docker. Les versions exactes sont verrouillées dans `package-lock.json`. Cette liste décrit le code, pas un niveau d’expertise personnel.
 
 ## Architecture
 
 ```text
 app/         routes publiques, administration et API
 components/  interface, layout et animations
-features/    composants et données par domaine
-lib/         infrastructure, auth, sécurité et constantes
-prisma/      schéma, migrations, initialisation explicite
-public/      ressources publiques
-docs/        architecture et procédures
+features/    logique et composants par domaine
+lib/         base, authentification, sécurité et constantes
+prisma/      schéma, migrations et initialisation explicite
+public/      images et ressources publiques
+tests/       validations unitaires et intégration locale protégée
 ```
 
-Les groupes de routes n’ajoutent pas de segment public. L’administration est sous `/admin` et les services sous `/api`. Le contenu public est principalement statique : modifier un enregistrement admin ne signifie pas que toutes les pages publiques se mettent à jour.
+Les groupes de routes n’ajoutent pas de segment public. L’administration est sous `/admin`, les services sous `/api`. Sans `DATABASE_URL`, le site public utilise les données de démonstration versionnées. Avec PostgreSQL, la base est la source de vérité : masquer un contenu ou laisser une liste vide ne fait pas réapparaître les données de secours.
 
 ## Installation
 
-Prérequis : Node.js compatible avec les versions verrouillées (24 conseillé), npm ; PostgreSQL uniquement pour les fonctions persistantes.
+Prérequis : Node.js 24 conseillé, npm et PostgreSQL pour les fonctions persistantes.
 
 ```bash
 npm ci
@@ -48,54 +48,72 @@ npm run db:generate
 npm run dev
 ```
 
-Le site de présentation peut être consulté sans base configurée. Pour les fonctions serveur, copier `.env.example` vers `.env` et remplacer les exemples localement. Prisma charge `.env` ; ne pas compter uniquement sur `.env.local` pour les commandes Prisma.
+## Variables d’environnement
 
 | Variable | Usage |
 | --- | --- |
 | `DATABASE_URL` | Connexion PostgreSQL de l’application |
-| `DIRECT_URL` | Connexion utilisée par la configuration Prisma si renseignée |
-| `AUTH_SECRET` | Secret serveur des sessions |
-| `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Initialisation explicite ; jamais des variables publiques |
+| `DIRECT_URL` | Connexion directe utilisée par Prisma si renseignée |
+| `DATABASE_URL_UNPOOLED` | Connexion directe Neon si `DIRECT_URL` est absente |
+| `AUTH_SECRET` | Signature serveur des sessions |
+| `ADMIN_EMAIL` | Email utilisé lors de l’initialisation manuelle |
+| `ADMIN_PASSWORD` | Mot de passe temporaire du seed, 12 caractères minimum |
 | `NEXT_PUBLIC_SITE_URL` | URL canonique publique |
 
-Ne committer aucun fichier d’environnement réel. Les valeurs de développement ne conviennent pas à la production.
+Ne committer aucun fichier d’environnement réel. `ADMIN_PASSWORD` sert uniquement à l’initialisation manuelle et doit être retiré après celle-ci. Ne pas relancer le seed sur une base éditée : il peut mettre à jour le compte et les contenus initiaux.
 
-## Usage et vérifications
+## Base de données
+
+Les migrations et le seed sont des opérations de maintenance explicites. Vérifier la cible et sauvegarder avant exécution.
+
+```bash
+npm run db:migrate
+npm run db:deploy
+npm run db:seed
+npm run db:studio
+```
+
+La CLI Prisma ne charge pas automatiquement `.env.local`. En développement local, utiliser au besoin `node --env-file=.env.local` devant l’exécutable concerné.
+
+## Administration
+
+- `/admin/projects` : créer, modifier, mettre en avant ou masquer un projet.
+- `/admin/blog` : brouillon, publication immédiate ou programmée, archivage.
+- `/admin/skills` : compétences, niveaux, visibilité, ordre et catégories.
+- `/admin/journey` : étapes, dates, domaines et visibilité.
+- `/admin/messages` : texte complet, filtres et statut de traitement.
+- `/admin/settings` : coordonnées publiques et interrupteurs annonces/statistiques.
+- `/admin/analytics` : consultations agrégées des 30 derniers jours.
+
+Toutes les écritures revérifient la session et le rôle ADMIN en base, valident les champs côté serveur et actualisent les pages publiques. Le téléversement de nouveaux fichiers et l’envoi automatique d’e-mails ne sont pas configurés ; le sélecteur propose les images déjà présentes dans `public/images`.
+
+## Vérifications
 
 ```bash
 npm run lint
 npm run typecheck
+npm test
 npm run build
 npm run start
 ```
 
-Consulter `/`, `/projects`, `/about`, `/skills` et `/resume`. L’impression du CV dépend du navigateur.
+Les tests d’intégration refusent toute base autre que la base locale isolée sur le port **51214**. Ils créent des enregistrements synthétiques puis suppriment uniquement leurs propres enregistrements.
 
-## Base de données et déploiement
+## Déploiement et limites
 
-`npm run build` construit uniquement l’application : il n’applique aucune migration et n’initialise aucun compte. Une modification éditoriale ne doit pas remplacer un mot de passe ni écraser des données.
+`npm run build` construit uniquement l’application : il n’applique aucune migration et ne lance aucun seed. Une publication éditoriale ne remplace donc pas un mot de passe et n’écrase pas les contenus. Le `postinstall` génère Prisma Client. Le mode `standalone` est réservé à Docker et désactivé dans Vercel.
 
-Les commandes `npm run db:migrate` (développement), `npm run db:deploy` (migrations versionnées) et `npm run db:seed` sont des opérations explicites. Vérifier la cible et sauvegarder avant toute exécution. Le seed peut mettre à jour un compte et des contenus : ne jamais le lancer automatiquement sur une base utilisée. Les dates précises du parcours n’étant pas confirmées, le seed ne crée plus de dates déduites de l’ordre d’affichage et laisse les enregistrements existants intacts.
+La diffusion publicitaire dépend de l’inventaire Adsterra, des règles du réseau et des bloqueurs ; aucun gain n’est garanti. Les formats intrusifs Popunder et Social Bar ainsi que les publicités adultes sont désactivés.
 
-Le déploiement existant utilise Vercel. Le `postinstall` génère Prisma Client ; une publication de la branche suivie peut déclencher un build Vercel. Aucun schéma ni donnée de production n’est modifié par la mise à jour éditoriale du 30 août 2026.
+RM Study est déclarée fonctionnelle par son auteur ; son URL publique reste à référencer. Le site Union Company est consultable ; son système de gestion n’est pas exposé. Codel Academy ne contient pas encore d’implémentation publique. Les autres éléments gardent un statut explicite tant que leur démonstration ou documentation n’est pas fournie.
 
-## Project Status / Limitations
+## Rôle et feuille de route
 
-Site public en ligne, avec des projets de maturités différentes. RM Study est déclarée fonctionnelle par son auteur ; son URL publique reste à référencer. Le site Union Company est consultable ; son système de gestion n’est pas exposé ici. Codel Academy ne contient pas encore d’implémentation publique.
-
-Aucune affirmation d’utilisateurs, de revenus, d’années d’expérience salariée ou de sécurité de production n’est déduite de ce dépôt. Les fonctions admin, l’envoi de messages et les intégrations externes nécessitent des tests dédiés. Des scripts publicitaires externes existent dans `features/ads` : leur contenu et leur disponibilité sont indépendants du portfolio.
-
-## My Role
-
-Rehema Kasongo porte ce portfolio et la présentation de ses projets. Les outils de développement assisté peuvent contribuer au code et à la documentation ; cette présentation ne revendique pas une réalisation intégralement manuelle. L’historique Git permet d’examiner les contributions.
-
-## Roadmap
+Rehema Kasongo porte le portfolio et la présentation des projets. Des outils de développement assisté peuvent contribuer au code et à la documentation ; l’historique Git permet d’examiner les contributions.
 
 1. Référencer la démonstration RM Study et sa documentation technique.
-2. Ajouter des preuves propres à chaque projet, sans données internes.
-3. Tester les parcours serveur et revoir les dépendances signalées par l’audit npm.
-4. Compléter les dates précises et les intitulés de certificats après confirmation. L’Université de Kolwezi et le Bac 3 en 2026 sont confirmés par le CV fourni.
+2. Ajouter des preuves propres à chaque projet sans publier de données internes.
+3. Compléter les dates et intitulés de certificats après confirmation.
+4. Configurer, si nécessaire, un service d’envoi d’e-mails et un stockage d’images.
 
-## Screenshots / Demo
-
-La [démonstration publique](https://rehema-gules.vercel.app/) est la référence. Les images de projets ne remplacent pas un test fonctionnel. Aucun système interne ni compte de démonstration sensible n’est publié.
+La [démonstration publique](https://rehema-gules.vercel.app/) est la référence.

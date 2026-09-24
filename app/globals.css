@@ -172,6 +172,29 @@ h1,h2,h3,p { margin-top: 0; } h1,h2,h3 { letter-spacing: -.04em; line-height: 1.
 .admin-card-list { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); } .admin-card-list article { padding: 1.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); } .admin-card-list article > div { display: flex; justify-content: space-between; gap: 1rem; } .admin-card-list h2 { font-size: 1.6rem; } .admin-card-list span,.admin-card-list small { color: var(--muted); font-family: var(--mono); font-size: .56rem; } .admin-card-list p { color: var(--muted); }
 .admin-empty { padding: 4rem; border: 1px solid var(--line); color: var(--muted); text-align: center; } .settings-checklist { border-top: 1px solid var(--line); } .settings-checklist article { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); } .settings-checklist h2 { margin: 0; font-size: 1rem; } .settings-checklist p { margin: 0; color: var(--muted); font-size: .75rem; } .settings-checklist strong { font-family: var(--mono); font-size: .58rem; text-transform: uppercase; }
 
+/* Content management: same theme, usable forms and explicit action states. */
+.admin-editor { padding: clamp(1rem,3vw,2rem); border: 1px solid var(--line); background: var(--panel); }
+.editor-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.4rem; margin: 0 0 1.5rem; padding: 0; border: 0; min-width: 0; }
+.editor-field { min-width: 0; } .editor-wide { grid-column: 1/-1; }
+.editor-field label { display: block; margin-bottom: .45rem; font-size: .86rem; }
+.editor-field input:not([type=checkbox]),.editor-field select,.editor-field textarea,.admin-search input { width: 100%; min-height: 46px; padding: .75rem; border: 1px solid var(--line-strong); border-radius: 4px; background: var(--void-soft); color: var(--text); font: inherit; }
+.editor-field textarea { resize: vertical; } .editor-field input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--amber); flex: 0 0 auto; }
+.editor-field .editor-checkbox { display: flex; gap: .75rem; align-items: center; min-height: 46px; }
+.field-hint,.field-error { display: block; margin-top: .4rem; line-height: 1.5; } .field-hint { color: var(--muted); } .field-error { color: var(--danger); }
+.editor-field [aria-invalid=true] { border-color: var(--danger); }
+.admin-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
+.admin-toolbar a:not(.primary-action),.admin-category-list a { color: var(--amber); }
+.admin-search { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; flex: 1; } .admin-search input { width: min(360px,100%); }
+.admin-search button,.admin-signout { padding: .7rem 1rem; border: 1px solid var(--line-strong); background: transparent; cursor: pointer; }
+.admin-signout { margin-top: .5rem; text-align: left; font-size: .8rem; } .admin-signout:hover { color: var(--amber); }
+.row-actions { white-space: nowrap; } .row-actions a { display: inline-block; padding: .5rem; }
+.admin-category-list { list-style: none; padding: 0; } .admin-category-list li { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.message-body,.article-content p,.project-detail-grid p { white-space: pre-line; overflow-wrap: anywhere; }
+.message-list .admin-editor { margin-top: 1.5rem; } .admin-panel p { overflow-wrap: anywhere; }
+.category-filters a { flex: 0 0 auto; padding: .6rem 1rem; border: 1px solid var(--line-strong); color: var(--amber); }
+.article-cover { width: 100%; height: auto; max-height: 520px; object-fit: contain; margin-block: 2rem; border-radius: 16px; }
+@media (max-width: 760px) { .editor-fields { grid-template-columns: 1fr; } .editor-wide { grid-column: auto; } .admin-user { overflow-wrap: anywhere; } .system-status-list p { display: flex; flex-wrap: wrap; justify-content: space-between; } }
+
 @media (max-width: 1050px) {
   .desktop-nav,.nav-contact { display: none; } .nav-frame { grid-template-columns: 1fr auto; }
   .menu-toggle { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--line); background: transparent; cursor: pointer; }

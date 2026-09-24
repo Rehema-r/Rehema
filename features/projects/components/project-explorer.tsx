@@ -4,9 +4,10 @@ import Link from "next/link";
 import { Grid2X2, Orbit, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ProjectCard } from "@/features/projects/components/project-card";
-import { projectCategories, projects } from "@/features/projects/data";
+import type { PortfolioProject } from "@/features/projects/types/project.types";
 
-export function ProjectExplorer() {
+export function ProjectExplorer({ projects }: { projects: PortfolioProject[] }) {
+  const projectCategories = ["Tous", ...new Set(projects.map(project => project.category))];
   const [category, setCategory] = useState("Tous");
   const [query, setQuery] = useState("");
   const [view, setView] = useState<"grid" | "universe">("grid");
@@ -15,7 +16,7 @@ export function ProjectExplorer() {
     const matchesCategory = category === "Tous" || project.category === category;
     const normalized = `${project.title} ${project.summary} ${project.tags.join(" ")}`.toLowerCase();
     return matchesCategory && normalized.includes(query.trim().toLowerCase());
-  }), [category, query]);
+  }), [category, query, projects]);
 
   return (
     <section aria-label="Project Explorer">
@@ -30,6 +31,7 @@ export function ProjectExplorer() {
         {projectCategories.map((item) => <button type="button" key={item} className={category === item ? "active" : ""} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}
       </div>
       <p className="result-count" aria-live="polite">{visible.length} signal{visible.length > 1 ? "s" : ""} détecté{visible.length > 1 ? "s" : ""}</p>
+      {visible.length === 0 ? <p className="empty-signal">Aucun projet ne correspond à cette recherche.</p> : null}
       {view === "grid" ? (
         <div className="projects-grid">{visible.map((project) => <ProjectCard key={project.slug} project={project} index={projects.indexOf(project)} />)}</div>
       ) : (

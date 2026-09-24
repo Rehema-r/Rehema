@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { siteConfig } from "@/lib/constants/site";
+import { getPublicProfile } from "@/features/content/queries";
 
-export function Footer() {
+export async function Footer() {
+  const siteConfig = await getPublicProfile();
   return (
     <footer className="site-footer">
       <div className="footer-grid">
@@ -16,7 +17,7 @@ export function Footer() {
       </div>
       <div className="footer-meta">
         <p>© {new Date().getFullYear()} {siteConfig.creator}</p>
-        <div><a href={`mailto:${siteConfig.email}`}>Email</a><a href={siteConfig.github} target="_blank" rel="noreferrer">GitHub</a><Link href="/admin/login">Administration</Link></div>
+        <div><a href={`mailto:${siteConfig.email}`}>Email</a>{siteConfig.github ? <a href={siteConfig.github} target="_blank" rel="noreferrer">GitHub</a> : null}<Link href="/admin/login">Administration</Link></div>
         <p>{siteConfig.location}</p>
       </div>
     </footer>

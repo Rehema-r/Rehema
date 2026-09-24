@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SectionTitle } from "@/components/shared/section-title";
-import { skillGroups } from "@/features/skills/data/skills";
+import { getPublicSkills } from "@/features/content/queries";
 
-export function SkillsPreview() {
+export async function SkillsPreview() {
+  const skillGroups = await getPublicSkills();
   return (
     <section className="capabilities-section">
       <div className="content-section">

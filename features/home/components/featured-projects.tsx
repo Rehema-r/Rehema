@@ -3,9 +3,10 @@ import { ArrowUpRight } from "lucide-react";
 import { RevealOnScroll } from "@/components/motion/reveal-on-scroll";
 import { SectionTitle } from "@/components/shared/section-title";
 import { ProjectCard } from "@/features/projects/components/project-card";
-import { projects } from "@/features/projects/data";
+import { getPublicProjects } from "@/features/content/queries";
 
-export function FeaturedProjects() {
+export async function FeaturedProjects() {
+  const projects = await getPublicProjects();
   const featured = projects.filter((project) => project.featured);
   return (
     <section className="content-section" id="exploration">

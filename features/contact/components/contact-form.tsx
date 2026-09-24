@@ -5,11 +5,11 @@ import { ArrowUpRight, CheckCircle2, Send } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { contactSchema, type ContactInput } from "@/features/contact/schemas/contact.schema";
-import { siteConfig } from "@/lib/constants/site";
+
 
 type FormState = { type: "idle" | "success" | "error"; message?: string; databaseMissing?: boolean };
 
-export function ContactForm() {
+export function ContactForm({ email }: { email: string }) {
   const [state, setState] = useState<FormState>({ type: "idle" });
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
@@ -22,7 +22,7 @@ export function ContactForm() {
       const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values) });
       const payload = await response.json() as { message?: string; code?: string };
       if (!response.ok) {
-        setState({ type: "error", message: payload.message ?? "Le message n’a pas pu être envoyé.", databaseMissing: payload.code === "DATABASE_NOT_CONFIGURED" });
+        setState({ type: "error", message: payload.message ?? "Le message n’a pas pu être envoyé.", databaseMissing: response.status >= 500 });
         return;
       }
       reset();
@@ -45,7 +45,7 @@ export function ContactForm() {
       {state.type !== "idle" ? (
         <div className={`form-notice ${state.type}`} role="status">
           {state.type === "success" ? <CheckCircle2 aria-hidden="true" /> : null}<p>{state.message}</p>
-          {state.databaseMissing ? <a href={`mailto:${siteConfig.email}`}><span>Écrire directement par email</span><ArrowUpRight size={16} /></a> : null}
+          {state.databaseMissing ? <a href={`mailto:${email}`}><span>Écrire directement par email</span><ArrowUpRight size={16} /></a> : null}
         </div>
       ) : null}
       <button type="submit" className="primary-action" disabled={isSubmitting}>{isSubmitting ? "Transmission…" : "Transmettre le message"}<Send size={17} aria-hidden="true" /></button>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { LoginForm } from "@/features/admin/components/login-form";
 
-export const metadata: Metadata = { title: "Connexion administration" };
+export const metadata: Metadata = { title: "Connexion administration", robots: { index: false, follow: false } };
 
 export default function AdminLoginPage() {
   const ready = Boolean(process.env.AUTH_SECRET && process.env.DATABASE_URL);

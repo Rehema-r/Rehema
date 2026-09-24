@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { contactSchema } from "@/features/contact/schemas/contact.schema";
 import { getPrisma } from "@/lib/db/prisma";
 import { checkRateLimit } from "@/lib/security/rate-limit";
+import { getPublicProfile } from "@/features/content/queries";
 
 export async function POST(request: Request) {
   const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
@@ -33,10 +34,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ code: "DATABASE_NOT_CONFIGURED", message: "Le canal base de données n’est pas encore connecté. Utilisez l’email direct." }, { status: 503 });
   }
 
-  await db.$transaction([
-    db.message.create({ data: { name: parsed.data.name, email: parsed.data.email.toLowerCase(), subject: parsed.data.subject, body: parsed.data.message } }),
-    db.visitorEvent.create({ data: { type: "CONTACT_SENT", path: "/contact" } }),
-  ]);
+  try {
+    const profile = await getPublicProfile();
+    await db.$transaction([
+      db.message.create({ data: { name: parsed.data.name, email: parsed.data.email.toLowerCase(), subject: parsed.data.subject, body: parsed.data.message } }),
+      ...(profile.analyticsEnabled && request.headers.get("dnt") !== "1" ? [db.visitorEvent.create({ data: { type: "CONTACT_SENT", path: "/contact" } })] : []),
+    ]);
+  } catch {
+    return NextResponse.json({ code: "DATABASE_UNAVAILABLE", message: "Le message n’a pas pu être enregistré. Réessayez ou utilisez l’email direct." }, { status: 503 });
+  }
 
   return NextResponse.json({ message: "Message enregistré." }, { status: 201 });
 }

@@ -6,6 +6,7 @@ export type BlogPost = {
   category: string;
   publishedAt: string;
   readingTime: number;
+  coverImage?: string;
 };
 
 export const posts: BlogPost[] = [

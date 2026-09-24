@@ -2,15 +2,16 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageContainer } from "@/components/layout/page-container";
 import { SectionTitle } from "@/components/shared/section-title";
-import { posts } from "@/features/blog/data/posts";
+import { getPublicPosts, getPublicJourney } from "@/features/content/queries";
 import { FinalCta } from "@/features/home/components/final-cta";
 import { FeaturedProjects } from "@/features/home/components/featured-projects";
 import { HeroSection } from "@/features/home/components/hero-section";
 import { SkillsPreview } from "@/features/home/components/skills-preview";
 import { StatsSection } from "@/features/home/components/stats-section";
-import { journey } from "@/features/journey/data/journey";
 
-export default function HomePage() {
+
+export default async function HomePage() {
+  const [posts, journey] = await Promise.all([getPublicPosts(), getPublicJourney()]);
   return (
     <>
       <HeroSection />
