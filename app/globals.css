@@ -189,6 +189,7 @@ h1,h2,h3,p { margin-top: 0; } h1,h2,h3 { letter-spacing: -.04em; line-height: 1.
 .admin-signout { margin-top: .5rem; text-align: left; font-size: .8rem; } .admin-signout:hover { color: var(--amber); }
 .row-actions { white-space: nowrap; } .row-actions a { display: inline-block; padding: .5rem; }
 .admin-category-list { list-style: none; padding: 0; } .admin-category-list li { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.agent-action-list { margin: 0 0 1.5rem; padding: 0; list-style: none; border-top: 1px solid var(--line); } .agent-action-list li { padding: .8rem 0; border-bottom: 1px solid var(--line); color: var(--muted); }
 .message-body,.article-content p,.project-detail-grid p { white-space: pre-line; overflow-wrap: anywhere; }
 .message-list .admin-editor { margin-top: 1.5rem; } .admin-panel p { overflow-wrap: anywhere; }
 .category-filters a { flex: 0 0 auto; padding: .6rem 1rem; border: 1px solid var(--line-strong); color: var(--amber); }

@@ -16,5 +16,6 @@ export const adminNavigation = [
   { href: "/admin/blog", label: "Blog" },
   { href: "/admin/messages", label: "Messages" },
   { href: "/admin/analytics", label: "Analytics" },
+  { href: "/admin/agent", label: "Agent Portfolio" },
   { href: "/admin/settings", label: "Paramètres" },
 ];

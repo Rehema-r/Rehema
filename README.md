@@ -19,6 +19,7 @@ Les réalisations confirmées RM Study, Union Company et RM Tech sont distingué
 - Messages persistés et classables ; réponse via la messagerie de l’administrateur.
 - Statistiques agrégées sans cookie d’analyse, adresse IP ou identifiant de visiteur conservé dans les événements.
 - Bannière Adsterra responsive sur les pages publiques, désactivable dans les paramètres.
+- Agent Portfolio interne sans IA : synchronisation quotidienne des nouveaux dépôts GitHub, création de fiches et d’actualités, avec publication LinkedIn optionnelle par API officielle.
 
 ## Technologies
 
@@ -59,6 +60,11 @@ npm run dev
 | `ADMIN_EMAIL` | Email utilisé lors de l’initialisation manuelle |
 | `ADMIN_PASSWORD` | Mot de passe temporaire du seed, 12 caractères minimum |
 | `NEXT_PUBLIC_SITE_URL` | URL canonique publique |
+| `CRON_SECRET` | Protège l’appel quotidien de l’Agent Portfolio par Vercel |
+| `GITHUB_TOKEN` | Optionnel, augmente la limite de l’API GitHub |
+| `LINKEDIN_ACCESS_TOKEN` | Optionnel, jeton officiel autorisant la publication LinkedIn |
+| `LINKEDIN_AUTHOR_URN` | Optionnel, identifiant officiel du membre LinkedIn |
+| `LINKEDIN_API_VERSION` | Version mensuelle de l’API LinkedIn |
 
 Ne committer aucun fichier d’environnement réel. `ADMIN_PASSWORD` sert uniquement à l’initialisation manuelle et doit être retiré après celle-ci. Ne pas relancer le seed sur une base éditée : il peut mettre à jour le compte et les contenus initiaux.
 
@@ -84,6 +90,7 @@ La CLI Prisma ne charge pas automatiquement `.env.local`. En développement loca
 - `/admin/messages` : texte complet, filtres et statut de traitement.
 - `/admin/settings` : coordonnées publiques et interrupteurs annonces/statistiques.
 - `/admin/analytics` : consultations agrégées des 30 derniers jours.
+- `/admin/agent` : état, historique synthétique et lancement manuel de l’agent hébergé.
 
 Toutes les écritures revérifient la session et le rôle ADMIN en base, valident les champs côté serveur et actualisent les pages publiques. Le téléversement de nouveaux fichiers et l’envoi automatique d’e-mails ne sont pas configurés ; le sélecteur propose les images déjà présentes dans `public/images`.
 
@@ -104,6 +111,8 @@ Les tests d’intégration refusent toute base autre que la base locale isolée 
 `npm run build` construit uniquement l’application : il n’applique aucune migration et ne lance aucun seed. Une publication éditoriale ne remplace donc pas un mot de passe et n’écrase pas les contenus. Le `postinstall` génère Prisma Client. Le mode `standalone` est réservé à Docker et désactivé dans Vercel.
 
 La diffusion publicitaire dépend de l’inventaire Adsterra, des règles du réseau et des bloqueurs ; aucun gain n’est garanti. Les formats intrusifs Popunder et Social Bar ainsi que les publicités adultes sont désactivés.
+
+L’Agent Portfolio est une fonction déterministe exécutée quotidiennement par Vercel Cron vers 9 h, heure de Lubumbashi. Il n’appelle ni Codex ni un modèle d’IA. Sur le plan Hobby, Vercel peut décaler l’exécution dans l’heure prévue. La synchronisation GitHub fonctionne sans jeton à faible fréquence ; LinkedIn reste inactif tant que l’application LinkedIn, le droit `w_member_social`, le jeton et l’URN du membre ne sont pas configurés.
 
 RM Study est déclarée fonctionnelle par son auteur ; son URL publique reste à référencer. Le site Union Company est consultable ; son système de gestion n’est pas exposé. Codel Academy ne contient pas encore d’implémentation publique. Les autres éléments gardent un statut explicite tant que leur démonstration ou documentation n’est pas fournie.
 

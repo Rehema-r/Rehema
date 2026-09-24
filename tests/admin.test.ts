@@ -2,6 +2,24 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { imagePathSchema, journeySchema, listSchema, postSchema, profileSchema, projectSchema, slugSchema, slugify, webUrlSchema } from "../features/admin/schemas";
 import { eventSchema } from "../features/analytics/schema";
+import { buildLinkedInPost, buildNewsCopy, isPublishableRepository, projectSlugFromRepository, titleFromRepository, type GitHubRepository } from "../features/automation/github";
+
+const repository: GitHubRepository = {
+  id: 42,
+  name: "mon-projet_test",
+  description: "Une réalisation vérifiée.",
+  html_url: "https://github.com/Rehema-r/mon-projet_test",
+  homepage: "https://example.test",
+  language: "TypeScript",
+  topics: [],
+  fork: false,
+  archived: false,
+  disabled: false,
+  private: false,
+  is_template: false,
+  created_at: "2026-09-01T00:00:00.000Z",
+  updated_at: "2026-09-20T00:00:00.000Z",
+};
 
 test("slug validation rejects traversal and script-like input", () => {
   assert.equal(slugSchema.safeParse("un-projet-2026").success, true);
@@ -44,4 +62,21 @@ test("analytics exclude admin routes, query strings and arbitrary metadata", () 
   for (const path of ["/admin/settings", "/api/auth", "/contact?email=private", "//other.test"]) assert.equal(eventSchema.safeParse({ type: "PAGE_VIEW", path }).success, false);
   const parsed = eventSchema.parse({ type: "PAGE_VIEW", path: "/projects/mon-projet", metadata: { email: "private" }, sessionId: "private" });
   assert.deepEqual(parsed, { type: "PAGE_VIEW", path: "/projects/mon-projet" });
+});
+test("portfolio agent publishes only eligible GitHub repositories", () => {
+  assert.equal(isPublishableRepository(repository, "Rehema-r", ["Rehema"]), true);
+  assert.equal(isPublishableRepository({ ...repository, fork: true }, "Rehema-r", []), false);
+  assert.equal(isPublishableRepository({ ...repository, description: null }, "Rehema-r", []), false);
+  assert.equal(isPublishableRepository({ ...repository, name: "Rehema-r" }, "Rehema-r", []), false);
+  assert.equal(isPublishableRepository({ ...repository, name: "Rehema" }, "Rehema-r", ["Rehema"]), false);
+});
+test("portfolio agent produces factual, stable publication copy", () => {
+  assert.equal(titleFromRepository(repository.name), "Mon Projet Test");
+  assert.equal(projectSlugFromRepository(repository), "mon-projet-test");
+  const news = buildNewsCopy(repository, "mon-projet-test", "https://portfolio.test/");
+  assert.match(news.content, /Une réalisation vérifiée/);
+  assert.match(news.projectUrl, /^https:\/\/portfolio\.test\/projects\//);
+  const post = buildLinkedInPost(repository, "mon-projet-test", "https://portfolio.test");
+  assert.match(post, /TypeScript/);
+  assert.match(post, /https:\/\/portfolio\.test\/projects\/mon-projet-test/);
 });
